@@ -39,13 +39,10 @@ export async function forgotPassword(body) {
 }
 
 export async function resetPassword(body) {
-  const { email, token, password } = body
-  const user = await User.findOne({ email })
+  const { token, password } = body
+  const user = await User.findOne({ passwordResetToken: token })
 
   if(!user)
-    throw { message: 'User not found' }
-
-  if(token !== user.passwordResetToken)
     throw { message: 'Invalid token' }
 
   const now = new Date

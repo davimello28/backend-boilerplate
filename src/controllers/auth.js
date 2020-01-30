@@ -43,12 +43,14 @@ export async function forgotPassword(req, res) {
     *
     * @apiParam (Body) {String} email User email
     *
+    * @apiSuccess {String} status Ok
+    *
     * @apiError {String} error Message about error
     */
 
   try {
     await Auth.forgotPassword(req.body)
-    return res.send()
+    return res.json({ status: 'Ok' })
   } catch (err) {
     const error = err.message || 'Can\'t forgot password'
     return res.status(400).json({ error })
@@ -64,15 +66,16 @@ export async function resetPassword(req, res) {
     * @apiHeader {String} Content-Type application/json
     *
     * @apiParam (Body) {String} token Token received in user email
-    * @apiParam (Body) {String} email User email
     * @apiParam (Body) {String} password New user password
+    *
+    * @apiSuccess {String} status Ok
     *
     * @apiError {String} error Message about error
     */
 
   try {
     await Auth.resetPassword(req.body)
-    return res.send()
+    return res.json({ status: 'Ok' })
   } catch (err) {
     const error = err.message || 'Can\'t reset password'
     return res.status(400).json({ error })
