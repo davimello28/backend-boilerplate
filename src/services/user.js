@@ -1,7 +1,11 @@
 import mongoose from 'mongoose'
 import { User } from '../models'
 
-import { File } from './'
+import { file } from './'
+
+const services = {
+  file
+}
 
 const checkDuplicateEmail = async (email, excludeId) => {
   const user = await User.findOne({ email, _id: { $ne: excludeId } })
@@ -42,12 +46,12 @@ export async function update(id, file, body) {
     throw { message: 'User not found' }
 
   if(file) {
-    const avatar = await File.create(file)
+    const avatar = await services.file.create(file)
     user.avatar = avatar.url
   } else if(body.avatar)
     throw { message: 'Invalid avatar format' }
   else if(body.avatar !== undefined && user.avatar)
-    await File.destroy({ url: user.avatar })
+    await services.file.destroy({ url: user.avatar })
 
   if(body.email)
     await checkDuplicateEmail(body.email, id)

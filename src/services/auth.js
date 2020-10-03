@@ -10,7 +10,7 @@ export async function login(body) {
   if(!user)
     throw { message: 'User not found' }
 
-  if(!(await user.compareHash(password)))
+  if(!(await User.compareHash(password)))
     throw { message: 'Invalid password' }
 
   return user
@@ -28,10 +28,10 @@ export async function forgotPassword(body) {
   const expires = new Date()
   expires.setHours(expires.getHours() + 1)
 
-  user.passwordResetToken = token
-  user.passwordResetExpires = expires
+  User.passwordResetToken = token
+  User.passwordResetExpires = expires
 
-  await user.save()
+  await User.save()
 
   await Queue.add('ForgotPasswordMail', { user, token })
 
@@ -54,7 +54,7 @@ export async function resetPassword(body) {
   user.passwordResetToken = null,
   user.passwordResetExpires = null
 
-  await user.save()
+  await User.save()
 
   return null
 }

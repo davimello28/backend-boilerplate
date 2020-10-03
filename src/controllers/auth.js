@@ -1,4 +1,4 @@
-import { Auth } from '../services'
+import services from '../services'
 
 export async function login(req, res) {
   /**
@@ -25,7 +25,7 @@ export async function login(req, res) {
     */
 
   try {
-    const user = await Auth.login(req.body)
+    const user = await services.auth.login(req.body)
     return res.json({ user, token: user.generateToken() })
   } catch (err) {
     const error = err.message || 'Can\'t user registration'
@@ -49,7 +49,7 @@ export async function forgotPassword(req, res) {
     */
 
   try {
-    await Auth.forgotPassword(req.body)
+    await services.auth.forgotPassword(req.body)
     return res.json({ status: 'Ok' })
   } catch (err) {
     const error = err.message || 'Can\'t forgot password'
@@ -74,7 +74,7 @@ export async function resetPassword(req, res) {
     */
 
   try {
-    await Auth.resetPassword(req.body)
+    await services.auth.resetPassword(req.body)
     return res.json({ status: 'Ok' })
   } catch (err) {
     const error = err.message || 'Can\'t reset password'

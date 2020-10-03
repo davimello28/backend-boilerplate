@@ -1,3 +1,9 @@
-export * as Auth from './auth'
-export * as File from './file'
-export * as User from './user'
+import * as auth from './auth'
+import * as file from './file'
+import * as user from './user'
+
+export default {
+    auth,
+    file, 
+    user
+}

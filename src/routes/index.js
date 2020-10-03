@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { Auth, File, User } from '../controllers'
+import { auth, file, user } from '../controllers'
 
 import multer from 'multer'
 import multerConfig from '../configs/multer'
@@ -7,21 +7,21 @@ import authMiddleware from '../middlewares/auth'
 
 const routes = Router()
 
-routes.post('/user', User.create)
+routes.post('/user', user.create)
 
-routes.post('/login', Auth.login)
-routes.post('/reset_password', Auth.resetPassword)
-routes.post('/forgot_password', Auth.forgotPassword)
+routes.post('/login', auth.login)
+routes.post('/reset_password', auth.resetPassword)
+routes.post('/forgot_password', auth.forgotPassword)
 
 routes.use(authMiddleware)
 
-routes.get('/user', User.getAll)
-routes.get('/user/me', User.getOne)
-routes.get('/user/:id', User.getOne)
-routes.put('/user/:id', multer(multerConfig).single('avatar'), User.update)
-routes.delete('/user/:id', User.destroy)
+routes.get('/user', user.getAll)
+routes.get('/user/me', user.getOne)
+routes.get('/user/:id', user.getOne)
+routes.put('/user/:id', multer(multerConfig).single('avatar'), user.update)
+routes.delete('/user/:id', user.destroy)
 
-routes.post('/file', multer(multerConfig).single('file'), File.create)
-routes.delete('/file/:id', File.destroy)
+routes.post('/file', multer(multerConfig).single('file'), file.create)
+routes.delete('/file/:id', file.destroy)
 
 export default routes

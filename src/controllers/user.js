@@ -1,4 +1,4 @@
-import { User } from '../services'
+import services from '../services'
 
 export async function create(req, res) {
   /**
@@ -25,7 +25,7 @@ export async function create(req, res) {
     */
 
   try {
-    const user = await User.create(req.body)
+    const user = await services.user.create(req.body)
     return res.json({ user })
   } catch (err) {
     const error = err.message || 'Can\'t user registration'
@@ -54,7 +54,7 @@ export async function getAll(req, res) {
     */
 
   try {
-    const users = await User.getAll()
+    const users = await services.user.getAll()
     return res.json({ users })
   } catch (err) {
     const error = err.message || 'Can\'t get users informations'
@@ -85,7 +85,7 @@ export async function getOne(req, res) {
     */
 
   try {
-    const user = await User.getOne(req.params.id || req.userId)
+    const user = await services.user.getOne(req.params.id || req.userId)
     return res.json({ user })
   } catch (err) {
     const error = err.message || 'Can\'t get user information'
@@ -122,7 +122,7 @@ export async function update(req, res) {
     */
 
   try {
-    const user = await User.update(req.params.id || req.userId, req.file, req.body)
+    const user = await services.user.update(req.params.id || req.userId, req.file, req.body)
     return res.json({ user })
   } catch (err) {
     const error = err.message || 'Can\'t update user informations'
@@ -153,7 +153,7 @@ export async function destroy(req, res) {
     */
 
   try {
-    const user = await User.destroy(req.params.id)
+    const user = await services.user.destroy(req.params.id)
     return res.json({ user })
   } catch (err) {
     const error = err.message || 'Can\'t delete user'

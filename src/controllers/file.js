@@ -1,4 +1,4 @@
-import { File } from '../services'
+import services from '../services'
 
 export async function create(req, res) {
   /**
@@ -25,7 +25,7 @@ export async function create(req, res) {
     */
 
   try {
-    const file = await File.create(req.file)
+    const file = await services.file.create(req.file)
     return res.json({ file })
   } catch (err) {
     const error = err.message || 'Can\'t upload file'
@@ -57,7 +57,7 @@ export async function destroy(req, res) {
     */
 
   try {
-    const file = await File.destroy({ _id: req.params.id })
+    const file = await services.file.destroy({ _id: req.params.id })
     return res.json({ file })
   } catch (err) {
     const error = err.message || 'Can\'t delete file'
